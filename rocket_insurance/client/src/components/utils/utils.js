@@ -2,43 +2,71 @@ import axios from "axios";
 
 // Validate incoming values
 export const validate = values => {
+  const {
+    first_name,
+    last_name,
+    line_1,
+    line_2,
+    city,
+    region,
+    postal,
+  } = values;
+
   let errors = {};
 
-  if (!values.first_name) {
+  if (!first_name) {
     errors.first_name = 'First name is required';
   }
 
-  if (!values.last_name) {
+  if (!last_name) {
     errors.last_name = 'Last name is required';
   }
 
-  if (!values.line_1) {
+  if (!line_1) {
     errors.line_1 = 'Address required';
   }
 
-  if (!values.city) {
+  if (!city) {
     errors.city = 'City required';
   }
 
-  if (!values.state) {
-    errors.state = 'State required';
+  if (!region) {
+    errors.region = 'State/Region required';
   }
 
-  if (!values.postal) {
+  if (!postal) {
     errors.postal = 'Postal/Zip code required';
   }
 
-  return createRatingProfile();
+  const body = {
+    first_name,
+    last_name,
+    address: {
+      line_1,
+      line_2,
+      city,
+      region,
+      postal,
+    }
+  };
+
+  if (Object.keys(errors).length === 0) {
+    return createRatingProfile(body);
+  } else {
+    console.log('errors', errors)
+    return errors;
+  }
+
 
 }
 
 // POST request to hit backend API
 const createRatingProfile = async(values) =>  {
   try {
-    const result = await axios.post("/posts/v1/quotes", test);
+    const results = await axios.post("/posts/v1/quotes", values);
 
-    if (result !== undefined && result !== null ) {
-      return result.data;
+    if (results !== undefined && results !== null ) {
+      return results.data;
     }
 
   } catch (error) {
