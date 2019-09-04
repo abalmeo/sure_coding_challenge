@@ -50,10 +50,18 @@ export const validate = values => {
     }
   };
 
+  // Check if all required fields are filled out
   if (Object.keys(errors).length === 0) {
-    return createRatingProfile(body);
+    const data = createRatingProfile(body);
+
+    // Return data or return the error
+    if (data !== undefined && data !== null) {
+      return data
+    } else {
+      return data;
+    }
+
   } else {
-    console.log('errors', errors)
     return errors;
   }
 
@@ -70,7 +78,12 @@ const createRatingProfile = async(values) =>  {
     }
 
   } catch (error) {
-    console.log(error);
+    return error;
 
   }
+}
+
+
+export const saveLocally = data => {
+
 }

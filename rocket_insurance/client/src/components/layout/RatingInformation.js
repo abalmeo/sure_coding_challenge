@@ -32,7 +32,8 @@ const RatingInformation = props => {
 
   const onSubmit = e => {
     e.preventDefault();
-    validate(formData);
+    let data = validate(formData);
+    console.log('data', data)
 
   }
 

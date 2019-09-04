@@ -9,6 +9,9 @@ router.post("/v1/quotes", async (req, res) => {
       // Destructuring request body
       const { first_name, last_name, address: {line_1, line_2, city, region, postal}} = req.body;
 
+      // Terminal logging of POST
+      console.log('Sending a POST with form-data...');
+
       // POST data as application/json to SURE url
       const result = await axios({
         method: 'post',
@@ -30,13 +33,18 @@ router.post("/v1/quotes", async (req, res) => {
       })
       res.send(result.data);
 
+      // Terminal logging of result status
+      if (result !== undefined && result !== null) {
+        console.log('Response Status: ', result.status)
+      }
   } catch (error) {
-    console.log(error);
 
+    // Error logging
+    console.log(error)
+    return error;
   }
 
 });
-
 
 module.exports = router;
 
