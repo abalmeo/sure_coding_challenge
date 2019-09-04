@@ -62,6 +62,8 @@ export const validate = values => {
     }
 
   } else {
+    errors.error = true;
+
     return errors;
   }
 
@@ -83,7 +85,3 @@ const createRatingProfile = async(values) =>  {
   }
 }
 
-
-export const saveLocally = data => {
-
-}

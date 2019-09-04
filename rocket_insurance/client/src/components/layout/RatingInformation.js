@@ -30,10 +30,33 @@ const RatingInformation = props => {
     setFormData({ ...formData, [e.target.name] : e.target.value});
   }
 
-  const onSubmit = e => {
+  const onSubmit = async e => {
     e.preventDefault();
-    let data = validate(formData);
-    console.log('data', data)
+    const data = await validate(formData);
+    const test = {
+      first_name: "Prairie",
+      last_name: "Johnson",
+      address: {
+        line_1: "123 Mulberry Lane",
+        line_2: "3B",
+        city: "Brooklyn",
+        region: "NY",
+        postal: "11211"
+      }
+    }
+
+    const now = new Date().getTime();
+    const setupTime = localStorage.getItem('setupTime');
+    if (setupTime == null) {
+        localStorage.setItem('setupTime', now)
+        // localStorage.setItem('data', data)
+        localStorage.setItem('data', JSON.stringify(test))
+    } else {
+        if(now-setupTime > 1*60*60*1000) {
+            localStorage.clear()
+            localStorage.setItem('setupTime', now);
+        }
+}
 
   }
 
