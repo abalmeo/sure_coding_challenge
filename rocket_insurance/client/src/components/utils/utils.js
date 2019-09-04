@@ -1,3 +1,6 @@
+import axios from "axios";
+
+// Validate incoming values
 export const validate = values => {
   let errors = {};
 
@@ -25,10 +28,21 @@ export const validate = values => {
     errors.postal = 'Postal/Zip code required';
   }
 
-  console.log('values');
+  return createRatingProfile();
 
 }
 
-export const createRatingProfile = values => {
-  console.log(values);
+// POST request to hit backend API
+const createRatingProfile = async(values) =>  {
+  try {
+    const result = await axios.post("/posts/v1/quotes", test);
+
+    if (result !== undefined && result !== null ) {
+      return result.data;
+    }
+
+  } catch (error) {
+    console.log(error);
+
+  }
 }

@@ -4,18 +4,16 @@ import PropTypes from 'prop-types';
 import { validate, createRatingProfile } from '../utils/utils';
 
 
-const RatingInformation = validate => {
+const RatingInformation = props => {
 
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
-    address: {
-      line_1: "",
-      line_2:"",
-      city: "",
-      region: "",
-      postal: ""
-    }
+    line_1: "",
+    line_2:"",
+    city: "",
+    region: "",
+    postal: ""
   })
 
   const {
@@ -147,7 +145,7 @@ const RatingInformation = validate => {
 }
 
 RatingInformation.propTypes = {
-  validate: PropTypes.func.isRequired,
+  // validate: PropTypes.func.isRequired,
 }
 
 export default RatingInformation
