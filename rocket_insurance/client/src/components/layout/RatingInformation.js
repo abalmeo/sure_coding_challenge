@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { validate, createRatingProfile } from '../utils/utils';
 
 
-const RatingInformation = props => {
+const RatingInformation = () => {
 
 
   const [formData, setFormData] = useState({
@@ -33,131 +33,119 @@ const RatingInformation = props => {
 
   const onSubmit = async e => {
     e.preventDefault();
+
+    // Validate and post data
     const data = await validate(formData);
 
-    // Save to local storage
+    // Get currect time
     const now = new Date().getTime();
-    const setupTime = localStorage.getItem('setupTime');
-    const userData = localStorage.getItem('userData');
 
-    if (setupTime == null && userData == null) {
+    if (now !== null && !data.error) {
+      console.log('test')
+        localStorage.clear();
         localStorage.setItem('setupTime', now)
-        console.log('data', data)
-        // localStorage.setItem('data', data)
         localStorage.setItem('userData', JSON.stringify(data))
-    } else {
-        // Clear localStorage if current time is 1 hour passed setupTime
-        if(now-setupTime > 1*60*60*1000) {
-            localStorage.clear()
-            localStorage.setItem('setupTime', now);
-        }
-}
-
+        return <Redirect to='/quote-overview' />;
+    }
   }
 
-  useEffect(() => {
-
-  })
   return (
-    <Fragment>
-      <form className="registration" onSubmit={e => onSubmit(e)}>
+    <Fragment >
+      <div className="ratingInfoBackground">
+        <form className="registration" onSubmit={e => onSubmit(e)}>
+          <h3 className="form-header"> Please enter your information below</h3>
+          <div className='form-group'>
+            <small>
+              First Name
+            </small>
+            <input
+              type="text"
+              placeholder="First Name"
+              name="first_name"
+              value={first_name}
+              onChange={e=>onChange(e)}
+            />
+          </div>
 
-        <div className='form-group'>
-          <input
-            type="text"
-            placeholder="First Name"
-            name="first_name"
-            value={first_name}
-            onChange={e=>onChange(e)}
-          />
-          <h3>
-            First Name
-          </h3>
-        </div>
+          <div className='form-group'>
+            <small>
+              Last Name
+            </small>
+            <input
+              type="text"
+              placeholder="Last Name"
+              name="last_name"
+              value={last_name}
+              onChange={e=>onChange(e)}
+            />
+          </div>
 
-        <div className='form-group'>
-          <input
-            type="text"
-            placeholder="Last Name"
-            name="last_name"
-            value={last_name}
-            onChange={e=>onChange(e)}
-          />
-          <h3>
-            Last Name
-          </h3>
-        </div>
+          <div className='form-group'>
+            <small>
+              Address
+            </small>
+            <input
+              type="text"
+              placeholder="Street Address, P.O. box, company name, c/o "
+              name="line_1"
+              value={line_1}
+              onChange={e=>onChange(e)}
+            />
+          </div>
 
-        <div className='form-group'>
-          <input
-            type="text"
-            placeholder="Street Address, P.O. box, company name, c/o "
-            name="line_1"
-            value={line_1}
-            onChange={e=>onChange(e)}
-          />
-          <h3>
-            Address Line 1
-          </h3>
-        </div>
+          <div className='form-group'>
+            <input
+              type="text"
+              placeholder="Apartment, suite, unit, building, floor, etc. "
+              name="line_2"
+              value={line_2}
+              onChange={e=>onChange(e)}
+            />
+          </div>
 
-        <div className='form-group'>
-          <input
-            type="text"
-            placeholder="Apartment, suite, unit, building, floor, etc. "
-            name="line_2"
-            value={line_2}
-            onChange={e=>onChange(e)}
-          />
-          <h3>
-            Address Line 2
-          </h3>
-        </div>
+          <div className='form-group'>
+            <small>
+              City
+            </small>
+            <input
+              type="text"
+              placeholder="e.g. Los Angeles"
+              name="city"
+              value={city}
+              onChange={e=>onChange(e)}
+            />
+          </div>
 
-        <div className='form-group'>
-          <input
-            type="text"
-            placeholder="e.g. Los Angeles"
-            name="city"
-            value={city}
-            onChange={e=>onChange(e)}
-          />
-          <h3>
-            City
-          </h3>
-        </div>
+          <div className='form-group'>
+            <small>
+              State
+            </small>
+            <input
+              type="text"
+              placeholder="e.g. California"
+              name="region"
+              value={region}
+              onChange={e=>onChange(e)}
+            />
+          </div>
 
-        <div className='form-group'>
-          <input
-            type="text"
-            placeholder="e.g. California"
-            name="region"
-            value={region}
-            onChange={e=>onChange(e)}
-          />
-          <h3>
-            State
-          </h3>
-        </div>
+          <div className='form-group'>
+            <small>
+              Postal Code
+            </small>
+            <input
+              type="number"
+              placeholder="e.g. 90017"
+              name="postal"
+              value={postal}
+              onChange={e=>onChange(e)}
+            />
+          </div>
 
-        <div className='form-group'>
-          <input
-            type="number"
-            placeholder="e.g. 90017"
-            name="postal"
-            value={postal}
-            onChange={e=>onChange(e)}
-          />
-          <h3>
-            Postal Code
-          </h3>
-        </div>
+          <input type='submit'/>
 
-        <input type='submit'/>
-        <Link className='btn btn-light' to='/quote-overview'/>
-
-      </form>
-
+        </form>
+      </div>
 
     </Fragment>
   )

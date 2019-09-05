@@ -58,12 +58,9 @@ export const validate = values => {
     if (data !== undefined && data !== null) {
       return data
     } else {
-      return data;
+      return 'Post unsuccessful';
     }
-
   } else {
-    errors.error = true;
-
     return errors;
   }
 
