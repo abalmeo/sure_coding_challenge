@@ -11,7 +11,7 @@ class App extends Component {
       <Router className="container">
         <Fragment>
           <Switch>
-            <Route exact path = "/" component ={QuoteOverview} />
+            <Route exact path = "/quote-overview" component ={QuoteOverview} />
             <Route exacst path = "/rating-information" component={RatingInformation} />
           </Switch>
         </Fragment>

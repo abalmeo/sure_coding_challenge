@@ -6,6 +6,7 @@ import { validate, createRatingProfile } from '../utils/utils';
 
 const RatingInformation = props => {
 
+
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -33,25 +34,19 @@ const RatingInformation = props => {
   const onSubmit = async e => {
     e.preventDefault();
     const data = await validate(formData);
-    const test = {
-      first_name: "Prairie",
-      last_name: "Johnson",
-      address: {
-        line_1: "123 Mulberry Lane",
-        line_2: "3B",
-        city: "Brooklyn",
-        region: "NY",
-        postal: "11211"
-      }
-    }
 
+    // Save to local storage
     const now = new Date().getTime();
     const setupTime = localStorage.getItem('setupTime');
-    if (setupTime == null) {
+    const userData = localStorage.getItem('userData');
+
+    if (setupTime == null && userData == null) {
         localStorage.setItem('setupTime', now)
+        console.log('data', data)
         // localStorage.setItem('data', data)
-        localStorage.setItem('data', JSON.stringify(test))
+        localStorage.setItem('userData', JSON.stringify(data))
     } else {
+        // Clear localStorage if current time is 1 hour passed setupTime
         if(now-setupTime > 1*60*60*1000) {
             localStorage.clear()
             localStorage.setItem('setupTime', now);

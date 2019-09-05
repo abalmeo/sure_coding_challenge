@@ -34,9 +34,8 @@ router.post("/v1/quotes", async (req, res) => {
       res.send(result.data);
 
       // Terminal logging of result status
-      if (result !== undefined && result !== null) {
-        console.log('Response Status: ', result.status)
-      }
+      console.log('Response Status: ', result.status)
+
   } catch (error) {
 
     // Error logging
