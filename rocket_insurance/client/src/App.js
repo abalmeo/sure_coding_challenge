@@ -12,7 +12,7 @@ class App extends Component {
         <Fragment>
           <Switch>
             <Route exact path = "/quote-overview" component ={QuoteOverview} />
-            <Route exacst path = "/rating-information" component={RatingInformation} />
+            <Route exact path = "/rating-information" component={RatingInformation} />
           </Switch>
         </Fragment>
       </Router>

@@ -61,6 +61,8 @@ export const validate = values => {
       return 'Post unsuccessful';
     }
   } else {
+    console.log('errors', errors)
+    errors.error = true;
     return errors;
   }
 

@@ -1,8 +1,8 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import { Link, withRouter, Redirect } from "react-router-dom";
-import PropTypes from 'prop-types';
-import { validate, createRatingProfile } from '../utils/utils';
-
+import React, { Fragment, useState } from 'react';
+import { Redirect } from "react-router-dom";
+import { validate } from '../utils/utils';
+import { Form, Button } from 'react-bootstrap';
+import states from '../utils/states';
 
 const RatingInformation = () => {
 
@@ -41,13 +41,16 @@ const RatingInformation = () => {
     const now = new Date().getTime();
 
     if (now !== null && !data.error) {
-      console.log('test')
         localStorage.clear();
         localStorage.setItem('setupTime', now)
         localStorage.setItem('userData', JSON.stringify(data))
         return <Redirect to='/quote-overview' />;
     }
   }
+
+  const stateOptions = Object.values(states).map(state => (
+    <option value={state}>{state}</option>
+  ))
 
   return (
     <Fragment >
@@ -64,6 +67,7 @@ const RatingInformation = () => {
               name="first_name"
               value={first_name}
               onChange={e=>onChange(e)}
+              required
             />
           </div>
 
@@ -77,6 +81,7 @@ const RatingInformation = () => {
               name="last_name"
               value={last_name}
               onChange={e=>onChange(e)}
+              required
             />
           </div>
 
@@ -90,6 +95,7 @@ const RatingInformation = () => {
               name="line_1"
               value={line_1}
               onChange={e=>onChange(e)}
+              required
             />
           </div>
 
@@ -113,6 +119,7 @@ const RatingInformation = () => {
               name="city"
               value={city}
               onChange={e=>onChange(e)}
+              required
             />
           </div>
 
@@ -120,13 +127,21 @@ const RatingInformation = () => {
             <small>
               State
             </small>
-            <input
+            {/* <input
               type="text"
               placeholder="e.g. California"
               name="region"
-              value={region}
+
               onChange={e=>onChange(e)}
-            />
+              required
+            /> */}
+            <select
+              name="state"
+              onChange={e=>onChange(e)}
+              required
+            >
+            {stateOptions}
+            </select>
           </div>
 
           <div className='form-group'>
@@ -139,6 +154,7 @@ const RatingInformation = () => {
               name="postal"
               value={postal}
               onChange={e=>onChange(e)}
+              required
             />
           </div>
 
@@ -146,7 +162,6 @@ const RatingInformation = () => {
 
         </form>
       </div>
-
     </Fragment>
   )
 }

@@ -1,6 +1,5 @@
 import React, {Fragment} from 'react';
-import PropTypes from 'prop-types';
-import { Card, Container, Row, Col, Form } from 'react-bootstrap';
+import { Card, Container, Row, Col } from 'react-bootstrap';
 import { Redirect } from "react-router-dom";
 
 const QuoteOverview = props => {
@@ -24,12 +23,8 @@ const QuoteOverview = props => {
   // Destructuring response data
   const {
     quote: {
-      quoteId,
-      rating_address,
       policy_holder,
       variable_options,
-      variable_selections,
-      premium,
     }} = data
 
     const deductible_values = variable_options.deductible.values.map((val, ind) => (
@@ -48,10 +43,10 @@ const QuoteOverview = props => {
 
 
   return (
-    <div>
+    <Fragment>
       <Container>
         <div className="userGreeting">
-          Hi {policy_holder.first_name}, we're excited you've chosen us for rocket owner's insurance. Please see the the available plans listed below.
+          Hi {policy_holder.first_name}, we're excited you've chosen us for rocket owner's insurance! Please see the the available plans listed below.
 
         </div>
 
@@ -81,7 +76,7 @@ const QuoteOverview = props => {
             </Col>
         </Row>
       </Container>
-    </div>
+    </Fragment>
   )
 }
 
