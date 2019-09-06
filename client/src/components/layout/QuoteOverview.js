@@ -55,7 +55,7 @@ const QuoteOverview = props => {
   return (
     <div className="quoteBackground">
       <div className=" container userGreeting">
-        Hi {first_name}, we're excited you've chosen us for rocket owner's insurance! Please see the the available plans listed below.
+        Hi {first_name}, we're excited you've chosen us for rocket owner's insurance! Please see the available plans listed below.
       </div>
       <div></div>
       <Row>
