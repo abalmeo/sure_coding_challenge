@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardGroup, Button, Form } from 'react-bootstrap';
+import { Card, Container, Row, Col, Form } from 'react-bootstrap';
 import { Redirect } from "react-router-dom";
 
 const QuoteOverview = props => {
@@ -22,7 +22,6 @@ const QuoteOverview = props => {
   }
 
   // Destructuring response data
-  // Can't further destructure Object keys with same name, so limited to the first variable option
   const {
     quote: {
       quoteId,
@@ -33,47 +32,56 @@ const QuoteOverview = props => {
       premium,
     }} = data
 
+    const deductible_values = variable_options.deductible.values.map((val, ind) => (
+        <tr key={ind}>
+          <td>Option {ind + 1} : {val}</td>
+        </tr>
+      )
+    )
+
+    const collision_values = variable_options.asteroid_collision.values.map((val, ind) => (
+      <tr key={ind}>
+        <td>Option {ind + 1} : {val}</td>
+      </tr>
+    )
+  )
 
 
   return (
-    <Fragment>
+    <div>
+      <Container>
+        <div className="userGreeting">
+          Hi {policy_holder.first_name}, we're excited you've chosen us for rocket owner's insurance. Please see the the available plans listed below.
 
-      <Card className="insuranceCard" bg="warning" text="white" style={{ width: '18rem' }}>
-        <Card.Header>Deductible</Card.Header>
-        <Card.Body>
-          <Card.Title>Warning Card Title</Card.Title>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the bulk
-            of the card's content.
-          </Card.Text>
-        </Card.Body>
-      </Card>
-      <br />
+        </div>
 
-      <Card className="insuranceCard" bg="info" text="white" style={{ width: '18rem' }}>
-        <Card.Header>Asteroid Collision</Card.Header>
-        <Card.Body>
-          <Card.Title>{variable_options.asteroid_collision.title}</Card.Title>
-          <Card.Text>
-            {variable_options.asteroid_collision.description}
-          </Card.Text>
+        <Row>
+          <Col md={{span: 4, offset: 2}}>
+            <Card className="insuranceCard" bg="warning" text="white" style={{ width: '18rem', height: '20rem' }}>
+              <Card.Header>Deductible</Card.Header>
+              <Card.Body>
+                <Card.Title>{variable_options.deductible.description}</Card.Title>
+                <table>
+                  <tbody>{deductible_values}</tbody>
+                </table>
+              </Card.Body>
+            </Card>
+          </Col>
 
-
-          <Card.Text>
-              <Form>
-                <Form.Group controlId="exampleForm.ControlSelect1">
-                  {/* <Form.Label>Example select</Form.Label> */}
-                  <Form.Control as="select">
-                    <option>1</option>
-                    <option>2</option>
-                  </Form.Control>
-                </Form.Group>
-            </Form>
-        </Card.Text>
-        </Card.Body>
-      </Card>
-
-    </Fragment>
+          <Col md={{span: 4}}>
+              <Card className="insuranceCard" bg="info" text="white" style={{ width: '18rem', height: '20rem' }}>
+                <Card.Header>Asteroid Collision</Card.Header>
+                <Card.Body>
+                  <Card.Title>{variable_options.asteroid_collision.title}</Card.Title>
+                  <table>
+                    <tbody>{collision_values}</tbody>
+                  </table>
+                </Card.Body>
+              </Card>
+            </Col>
+        </Row>
+      </Container>
+    </div>
   )
 }
 
