@@ -8,8 +8,8 @@ import "./App.css";
 const App = () => (
   <Router className="container">
       <Switch>
-        <Route exact path="/quote-overview" key="add" component ={QuoteOverview} />
-        <Route exact path="/rating-information" key="update" component={RatingInformation} />
+        <Route exact path="/quote-overview" component ={QuoteOverview} />
+        <Route exact path="/" component={RatingInformation} />
       </Switch>
   </Router>
 )

@@ -11,13 +11,13 @@ const QuoteOverview = props => {
   // Clear localStorage if current time is 1 hour passed setupTime and redirect to form
   if (now-setupTime > 1*60*60*1000) {
     localStorage.clear();
-    return <Redirect to="/rating-information" />;
+    return <Redirect to="/" />;
   }
 
   // Clear localStorage and Redirect to form if invalid data
   if (data === null || data.error === true) {
     localStorage.clear();
-    return <Redirect to="/rating-information" />;
+    return <Redirect to="/" />;
   }
 
   // Destructuring response data
