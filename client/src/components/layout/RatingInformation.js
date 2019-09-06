@@ -14,7 +14,7 @@ const RatingInformation = () => {
     region: "",
     postal: "",
     page_reload: "",
-  })
+  });
 
   const {
     first_name,
@@ -28,7 +28,7 @@ const RatingInformation = () => {
 
   const onFormChange = e => {
     setFormData({ ...formData, [e.target.name] : e.target.value});
-  }
+  };
 
   const onFormSubmit = async e => {
     e.preventDefault();
@@ -45,7 +45,7 @@ const RatingInformation = () => {
         localStorage.setItem('userData', JSON.stringify(data));
         window.location.href = '/quote-overview';
     }
-  }
+  };
 
   // Get State values for dropdown
   const stateOptions = Object.values(states).map(state => (
@@ -55,7 +55,7 @@ const RatingInformation = () => {
   return (
     <div className="ratingInfoBackground">
       <form className="registration" onSubmit={e => onFormSubmit(e)}>
-        <div className="form-group"> Welcome to Rocket-Insurance! Please enter your information below.</div>
+        <div className="form-group websiteGreeting"> Welcome to Rocket-Insurance! Please enter your information below.</div>
 
         <div className='form-group'>
           <small>
@@ -102,7 +102,7 @@ const RatingInformation = () => {
         <div className='form-group'>
           <input
             type="text"
-            placeholder="Apartment, suite, unit, building, floor, etc. "
+            placeholder="apartment, suite, unit, building, floor, etc. "
             name="line_2"
             value={line_2}
             onChange={e=>onFormChange(e)}
