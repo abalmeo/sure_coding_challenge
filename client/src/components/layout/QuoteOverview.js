@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import { Card, Container, Row, Col } from 'react-bootstrap';
 import { Redirect } from "react-router-dom";
 
@@ -23,7 +23,17 @@ const QuoteOverview = props => {
   // Destructuring response data
   const {
     quote: {
-      policy_holder,
+      rating_address: {
+        line_1,
+        line_2,
+        city,
+        region,
+        postal
+      },
+      policy_holder: {
+        first_name,
+        last_name
+      },
       variable_options,
     }} = data
 
@@ -45,11 +55,23 @@ const QuoteOverview = props => {
   return (
     <Container>
       <div className="userGreeting">
-        Hi {policy_holder.first_name}, we're excited you've chosen us for rocket owner's insurance! Please see the the available plans listed below.
+        Hi {first_name}, we're excited you've chosen us for rocket owner's insurance! Please see the the available plans listed below.
       </div>
 
       <Row>
-        <Col md={{span: 4, offset: 2}}>
+        <Col md={{span: 4}}>
+            <Card className="insuranceCard" bg="secondary" text="white" style={{ width: '18rem', height: '20rem' }}>
+              <Card.Header>Profile</Card.Header>
+              <Card.Body>
+                <table>
+                  <tdata>Policy Holder:{first_name}{last_name}</tdata><br/>
+                  <tdata>Address: {line_1} {line_2}{city} {region} {postal}</tdata>
+                </table>
+              </Card.Body>
+            </Card>
+        </Col>
+
+        <Col md={{span: 4}}>
           <Card className="insuranceCard" bg="warning" text="white" style={{ width: '18rem', height: '20rem' }}>
             <Card.Header>Deductible</Card.Header>
             <Card.Body>

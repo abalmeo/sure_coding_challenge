@@ -49,13 +49,13 @@ const RatingInformation = () => {
 
   // Get State values for dropdown
   const stateOptions = Object.values(states).map(state => (
-    <option value={state}>{state}</option>
+    <option value={state} key={state}>{state}</option>
   ))
 
   return (
     <div className="ratingInfoBackground">
       <form className="registration" onSubmit={e => onFormSubmit(e)}>
-        <h3 className="form-header"> Please enter your information below</h3>
+        <div className="form-group"> Welcome to Rocket-Insurance! Please enter your information below.</div>
 
         <div className='form-group'>
           <small>
@@ -63,7 +63,7 @@ const RatingInformation = () => {
           </small>
           <input
             type="text"
-            placeholder="First Name"
+            placeholder="What is your first name?"
             name="first_name"
             value={first_name}
             onChange={e=>onFormChange(e)}
@@ -77,7 +77,7 @@ const RatingInformation = () => {
           </small>
           <input
             type="text"
-            placeholder="Last Name"
+            placeholder="What is your last name?"
             name="last_name"
             value={last_name}
             onChange={e=>onFormChange(e)}
@@ -125,7 +125,7 @@ const RatingInformation = () => {
 
         <div className='form-group'>
           <small>
-            State*
+            State* <br/>
           </small>
           <select
             name="region"
@@ -151,7 +151,7 @@ const RatingInformation = () => {
           />
         </div>
 
-        <input type='submit'/>
+        <input className="submitButton" type='submit'/>
 
       </form>
     </div>
