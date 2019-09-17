@@ -1,10 +1,11 @@
-import React from 'react';
-import { Card, Row, Col } from 'react-bootstrap';
+import React, {useState, useEffect} from 'react';
+import { Card, Row, Col, DropdownButton, Dropdown } from 'react-bootstrap';
 import { Redirect } from "react-router-dom";
 
-const QuoteOverview = props => {
+const QuoteOverview = () => {
 
   const data = JSON.parse(localStorage.getItem('userData'));
+  const insurancePlan = JSON.parse(localStorage.getItem('insurancePLan'));
   const setupTime = localStorage.getItem('setupTime');
   const now = new Date().getTime();
 
@@ -38,24 +39,19 @@ const QuoteOverview = props => {
     }} = data;
 
     const deductible_values = variable_options.deductible.values.map((val, ind) => (
-        <tr key={val + ind}>
-          <td>Option {ind + 1} : ${val}</td>
-        </tr>
+      <option value={val}> Option {ind+1}: {val}</option>
       )
     );
 
     const collision_values = variable_options.asteroid_collision.values.map((val, ind) => (
-      <tr key={val + ind}>
-        <td>Option {ind + 1} : ${val}</td>
-      </tr>
+      <option value={val}> Option {ind+1}: {val}</option>
     )
   );
-
 
   return (
     <div className="quoteBackground">
       <div className=" container userGreeting">
-        Hi {first_name}, we're excited you've chosen us for rocket owner's insurance! Please see the available plans listed below.
+        Hi {first_name}, we're excited you've chosen us for rocket owner's insurance! Please see the available plans listed below*.
       </div>
       <div></div>
       <Row>
@@ -73,24 +69,38 @@ const QuoteOverview = props => {
 
         <Col md={{span: 3, offset: 1}}>
           <Card className="insuranceCard" bg="warning" text="white" style={{ width: '18rem', height: '20rem' }}>
-            <Card.Header className="cardOverview">Deductible</Card.Header>
+            <Card.Header className="cardOverview">{variable_options.deductible.title}*</Card.Header>
             <Card.Body>
               <Card.Title>{variable_options.deductible.description}</Card.Title>
-              <table>
-                <tbody>{deductible_values}</tbody>
-              </table>
+            </Card.Body>
+            <Card.Body>
+              <form className="insurance-registration">
+                <div className="insurance-selection">
+                  <select>
+                    {deductible_values}
+                  </select>
+                </div>
+                <input className="submitButton" type='submit'/>
+                </form>
             </Card.Body>
           </Card>
         </Col>
 
         <Col md={{span: 3, offset: 1}}>
             <Card className="insuranceCard" bg="info" text="white" style={{ width: '18rem', height: '20rem' }}>
-              <Card.Header className="cardOverview">Asteroid Collision</Card.Header>
+              <Card.Header className="cardOverview">{variable_options.asteroid_collision.title}*</Card.Header>
               <Card.Body>
-                <Card.Title>{variable_options.asteroid_collision.title}</Card.Title>
-                <table>
-                  <tbody>{collision_values}</tbody>
-                </table>
+                <Card.Title>{variable_options.asteroid_collision.description}</Card.Title>
+              </Card.Body>
+                <Card.Body>
+                <form className="insurance-registration">
+                <div className="insurance-selection">
+                  <select>
+                    {collision_values}
+                  </select>
+                </div>
+                <input className="submitButton" type='submit'/>
+                </form>
               </Card.Body>
             </Card>
           </Col>
