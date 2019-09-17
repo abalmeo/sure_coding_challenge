@@ -10,19 +10,28 @@ const QuoteOverview = () => {
   const setupTime = localStorage.getItem('setupTime');
   const now = new Date().getTime();
 
-  const [insuranceData, setInsuranceData] = useState({
+  const [formData, setFormData] = useState({
+    collision: "",
     deductible: "",
-    collision: ""
   });
+
+  const {
+    collision,
+    deductible,
+  } = formData;
 
 
   const onFormChange = e => {
-    setInsuranceData({ ...insuranceData, [e.target.name] : e.target.value});
+    setFormData({ ...formData, [e.target.name] : e.target.value});
   };
 
   const onFormSubmit = async e => {
     e.preventDefault();
-  }
+
+    // update time and add insurancePlan to local storage
+    localStorage.setItem('setupTime', now);
+    localStorage.setItem('insurancePlan', formData);
+  };
 
   // Clear localStorage if current time is 1 hour passed setupTime and redirect to form
   if (now-setupTime > 1*60*60*1000) {
@@ -53,13 +62,14 @@ const QuoteOverview = () => {
       variable_options,
     }} = data;
 
+    // Mapping through returned values
     const deductible_values = variable_options.deductible.values.map((val, ind) => (
-      <option value={val}> Option {ind+1}: {val}</option>
+      <option value={val} key={val}> Option {ind+1}: {val}</option>
       )
     );
 
     const collision_values = variable_options.asteroid_collision.values.map((val, ind) => (
-      <option value={val}> Option {ind+1}: {val}</option>
+      <option value={val} > Option {ind+1}: {val}</option>
     )
   );
 
@@ -90,13 +100,17 @@ const QuoteOverview = () => {
             </Card.Body>
             <Card.Body>
               <form className="insurance-registration">
-                <div className="insurance-selection">
-                  <select>
+                <div>
+                  <select
+                    name="deductible"
+                    value={deductible_values}
+                    className="insurance-selection"
+                    >
                     {deductible_values}
                   </select>
                 </div>
                 <input className="submitButton" type='submit'/>
-                </form>
+              </form>
             </Card.Body>
           </Card>
         </Col>
@@ -109,13 +123,17 @@ const QuoteOverview = () => {
               </Card.Body>
                 <Card.Body>
                 <form className="insurance-registration">
-                <div className="insurance-selection">
-                  <select>
+                <div>
+                  <select
+                    name="collision"
+                    value={collision_values}
+                    className="insurance-selection"
+                    >
                     {collision_values}
                   </select>
                 </div>
                 <input className="submitButton" type='submit'/>
-                </form>
+              </form>
               </Card.Body>
             </Card>
           </Col>

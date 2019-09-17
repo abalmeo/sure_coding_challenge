@@ -36,7 +36,7 @@ const RatingInformation = () => {
     // Validate and post data
     const data = await validate(formData);
 
-    // Get currect time
+    // Get correct time
     const now = new Date().getTime();
 
     if (now !== null && !data.error) {
@@ -128,6 +128,7 @@ const RatingInformation = () => {
             State* <br/>
           </small>
           <select
+            className="state-dropdown"
             name="region"
             value={region}
             onChange={e=>onFormChange(e)}
