@@ -1,13 +1,28 @@
 import React, {useState, useEffect} from 'react';
-import { Card, Row, Col, DropdownButton, Dropdown } from 'react-bootstrap';
+import { Card, Row, Col } from 'react-bootstrap';
 import { Redirect } from "react-router-dom";
 
 const QuoteOverview = () => {
 
+  // Get data from local storage
   const data = JSON.parse(localStorage.getItem('userData'));
   const insurancePlan = JSON.parse(localStorage.getItem('insurancePLan'));
   const setupTime = localStorage.getItem('setupTime');
   const now = new Date().getTime();
+
+  const [insuranceData, setInsuranceData] = useState({
+    deductible: "",
+    collision: ""
+  });
+
+
+  const onFormChange = e => {
+    setInsuranceData({ ...insuranceData, [e.target.name] : e.target.value});
+  };
+
+  const onFormSubmit = async e => {
+    e.preventDefault();
+  }
 
   // Clear localStorage if current time is 1 hour passed setupTime and redirect to form
   if (now-setupTime > 1*60*60*1000) {
