@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Card, Row, Col } from 'react-bootstrap';
 import { Redirect } from "react-router-dom";
 
@@ -11,7 +11,7 @@ const QuoteOverview = () => {
   const setupTime = localStorage.getItem('setupTime');
   const now = new Date().getTime();
 
-  const [formData, setFormData] = useState({
+  const [insuranceData, setInsuranceData] = useState({
     collision: "",
     deductible: "",
   });
@@ -19,28 +19,28 @@ const QuoteOverview = () => {
   const {
     collision,
     deductible,
-  } = formData;
-
+  } = insuranceData;
 
   const onFormChange = e => {
-
-    setFormData({ ...formData, [e.target.name] : e.target.value});
+    setInsuranceData({ ...insuranceData, [e.target.name] : e.target.value});
   };
 
-  const onFormSubmit = async e => {
+  const onFormSubmit = e => {
     e.preventDefault();
 
     // update time and add insurancePlan to local storage
     localStorage.setItem('setupTime', now);
-    if (formData.collision) {
-      localStorage.setItem('collisionPlan', formData.collision);
+    if (insuranceData.collision) {
+      localStorage.setItem('collisionPlan', collision);
     }
-    if (formData.deductible) {
-      localStorage.setItem('deductiblePlan', formData.deductible)
+    if (insuranceData.deductible) {
+      localStorage.setItem('deductiblePlan', deductible)
     }
 
-    collisionPlan = JSON.parse(localStorage.getItem('collisionPlan'));
-    deductiblePlan = JSON.parse(localStorage.getItem('deductiblePlan'));
+    setInsuranceData({
+      collisionPlan: collision,
+      deductiblePlan: deductible
+    });
   };
 
   // Clear localStorage if current time is 1 hour passed setupTime and redirect to form
@@ -74,83 +74,72 @@ const QuoteOverview = () => {
 
     // Mapping through returned values
     const deductible_values = variable_options.deductible.values.map((val, ind) => (
-      <option value={val} key={val}> Option {ind+1}: {val}</option>
+      <option value={val} key={val}> Option {ind+1}: ${val}</option>
       )
     );
 
     const collision_values = variable_options.asteroid_collision.values.map((val, ind) => (
-      <option value={val} > Option {ind+1}: {val}</option>
+      <option value={val}> Option {ind+1}: ${val}</option>
     )
   );
 
   return (
     <div className="quoteBackground">
-      <div className=" container userGreeting">
-        Hi {first_name}, we're excited you've chosen us for rocket owner's insurance! Please see the available plans listed below*.
-      </div>
-      <div></div>
       <Row>
-        <Col md={{span: 3, offset: 1}}>
-            <Card className="insuranceCard" bg="secondary" text="white" style={{ width: '18rem', height: '20rem' }}>
-              <Card.Header className="cardOverview">Profile</Card.Header>
-              <Card.Body>
-                <table>
-                  <tdata>Policy Holder: {first_name} {last_name}</tdata><br/>
-                  <tdata>Address: {line_1} {line_2} {city}, {region} {postal}</tdata><br/><br/>
-                  <tdata>Collision Plan: {collisionPlan}</tdata><br/>
-                  <tdata>Deductible Plan: {deductiblePlan}</tdata>
-                </table>
-              </Card.Body>
-            </Card>
+        <Col md={{span: 12}}>
+          <div className="userGreeting">
+            Hi {first_name}, we're excited you've chosen us for rocket owner's insurance! Please see the available plans listed below.*
+          </div>
         </Col>
 
-        <Col md={{span: 3, offset: 1}}>
-          <Card className="insuranceCard" bg="warning" text="white" style={{ width: '18rem', height: '20rem' }}>
-            <Card.Header className="cardOverview">{variable_options.deductible.title}*</Card.Header>
-            <Card.Body>
-              <Card.Title>{variable_options.deductible.description}</Card.Title>
+        <Col md={{span: 12}}>
+          <Card className="insuranceCard" bg="info" text="white" style={{ width: '30rem', height: '40rem' }}>
+            <Card.Header className="cardOverview">Profile</Card.Header>
+
+            <Card.Body style={{height: '1rem' }}>
+              <div>
+                <Card.Subtitle>Policy Holder: {first_name} {last_name}</Card.Subtitle><br/>
+                <Card.Subtitle>Address: {line_1} {line_2} {city}, {region} {postal}</Card.Subtitle>
+              </div>
+              <div>
+                <Card.Subtitle>Collision Plan: {collisionPlan} </Card.Subtitle>
+                <Card.Subtitle>Deductible Plan: {deductiblePlan} </Card.Subtitle>
+              </div>
             </Card.Body>
+
             <Card.Body>
-              <form className="insurance-registration" onSubmit={e => onFormSubmit(e)}>
-                <div>
+              <form className="insurance-registration" onSubmit={e => onFormSubmit(e)} name="deductible">
+                <Card.Subtitle className="cardOverview">{variable_options.deductible.title}*</Card.Subtitle>
+                  <Card.Text>{variable_options.deductible.description}</Card.Text>
+                  <div>
+                    <select
+                      name="deductible"
+                      className="insurance-selection"
+                      value={deductible}
+                      onChange={e=>onFormChange(e)}
+                      >
+                        <option disabled selected value> -- select an option -- </option>
+                      {deductible_values}
+                    </select>
+                  </div>
+                  <Card.Subtitle className="cardOverview">{variable_options.asteroid_collision.title}*</Card.Subtitle>
+                  <Card.Text>{variable_options.asteroid_collision.description}</Card.Text>
+                  <div>
                   <select
-                    name="deductible"
-                    value={deductible}
+                    name="collision"
                     className="insurance-selection"
+                    value={collision}
                     onChange={e=>onFormChange(e)}
                     >
-                    {deductible_values}
+                    <option disabled selected value> -- select an option -- </option>
+                    {collision_values}
                   </select>
-                </div>
+                  </div>
                 <input className="submitButton" type='submit'/>
               </form>
             </Card.Body>
           </Card>
         </Col>
-
-        <Col md={{span: 3, offset: 1}}>
-            <Card className="insuranceCard" bg="info" text="white" style={{ width: '18rem', height: '20rem' }}>
-              <Card.Header className="cardOverview">{variable_options.asteroid_collision.title}*</Card.Header>
-              <Card.Body>
-                <Card.Title>{variable_options.asteroid_collision.description}</Card.Title>
-              </Card.Body>
-                <Card.Body>
-                <form className="insurance-registration" onSubmit={e => onFormSubmit(e)}>
-                <div>
-                  <select
-                    name="collision"
-                    value={collision}
-                    className="insurance-selection"
-                    onChange={e=>onFormChange(e)}
-                    >
-                    {collision_values}
-                  </select>
-                </div>
-                <input className="submitButton" type='submit'/>
-              </form>
-              </Card.Body>
-            </Card>
-          </Col>
       </Row>
     </div>
   );
