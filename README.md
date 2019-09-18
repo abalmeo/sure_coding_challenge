@@ -1,7 +1,7 @@
 # Sure Coding Challenge
 *This application was created for the Sure coding challenge. This application was developed with React, Express, and Node and uses localStorage to temporarily store user data. The styling for this webpage was done with CSS and React Bootstrap.* 
 
-*A user registers their information in the registration form and when submitted, hits an endpoint which was provided by Sure. The api returns data with different insurance options and the application reroutes to /quote-overview where the data gets appended to the page.*
+*A user can register their information in the registration form and when submitted, hits an endpoint which was provided by Sure. The api returns data with different insurance options and the application reroutes to /quote-overview. From this page, a user can select a Deductible and Asteroid Collision Limit plan.*
 
 
 **Hosted on Heroku**
