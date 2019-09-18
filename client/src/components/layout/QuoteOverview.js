@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import { Card, Row, Col } from 'react-bootstrap';
 import { Redirect } from "react-router-dom";
 
@@ -6,7 +6,8 @@ const QuoteOverview = () => {
 
   // Get data from local storage
   const data = JSON.parse(localStorage.getItem('userData'));
-  const insurancePlan = JSON.parse(localStorage.getItem('insurancePLan'));
+  let collisionPlan = JSON.parse(localStorage.getItem('collisionPlan'));
+  let deductiblePlan = JSON.parse(localStorage.getItem('deductiblePlan'));
   const setupTime = localStorage.getItem('setupTime');
   const now = new Date().getTime();
 
@@ -22,6 +23,7 @@ const QuoteOverview = () => {
 
 
   const onFormChange = e => {
+
     setFormData({ ...formData, [e.target.name] : e.target.value});
   };
 
@@ -30,7 +32,15 @@ const QuoteOverview = () => {
 
     // update time and add insurancePlan to local storage
     localStorage.setItem('setupTime', now);
-    localStorage.setItem('insurancePlan', formData);
+    if (formData.collision) {
+      localStorage.setItem('collisionPlan', formData.collision);
+    }
+    if (formData.deductible) {
+      localStorage.setItem('deductiblePlan', formData.deductible)
+    }
+
+    collisionPlan = JSON.parse(localStorage.getItem('collisionPlan'));
+    deductiblePlan = JSON.parse(localStorage.getItem('deductiblePlan'));
   };
 
   // Clear localStorage if current time is 1 hour passed setupTime and redirect to form
@@ -86,7 +96,9 @@ const QuoteOverview = () => {
               <Card.Body>
                 <table>
                   <tdata>Policy Holder: {first_name} {last_name}</tdata><br/>
-                  <tdata>Address: {line_1} {line_2} {city}, {region} {postal}</tdata>
+                  <tdata>Address: {line_1} {line_2} {city}, {region} {postal}</tdata><br/><br/>
+                  <tdata>Collision Plan: {collisionPlan}</tdata><br/>
+                  <tdata>Deductible Plan: {deductiblePlan}</tdata>
                 </table>
               </Card.Body>
             </Card>
@@ -99,12 +111,13 @@ const QuoteOverview = () => {
               <Card.Title>{variable_options.deductible.description}</Card.Title>
             </Card.Body>
             <Card.Body>
-              <form className="insurance-registration">
+              <form className="insurance-registration" onSubmit={e => onFormSubmit(e)}>
                 <div>
                   <select
                     name="deductible"
-                    value={deductible_values}
+                    value={deductible}
                     className="insurance-selection"
+                    onChange={e=>onFormChange(e)}
                     >
                     {deductible_values}
                   </select>
@@ -122,12 +135,13 @@ const QuoteOverview = () => {
                 <Card.Title>{variable_options.asteroid_collision.description}</Card.Title>
               </Card.Body>
                 <Card.Body>
-                <form className="insurance-registration">
+                <form className="insurance-registration" onSubmit={e => onFormSubmit(e)}>
                 <div>
                   <select
                     name="collision"
-                    value={collision_values}
+                    value={collision}
                     className="insurance-selection"
+                    onChange={e=>onFormChange(e)}
                     >
                     {collision_values}
                   </select>

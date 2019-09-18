@@ -1,5 +1,4 @@
 import axios from "axios";
-
 // Validate incoming values
 export const validate = values => {
   const {

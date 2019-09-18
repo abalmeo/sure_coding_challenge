@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const { check, validationResult } = require("express-validator");
 const axios = require('axios')
 
 
@@ -30,7 +29,8 @@ router.post("/v1/quotes", async (req, res) => {
             postal
           }
         }
-      })
+      });
+
       res.send(result.data);
 
       // Terminal logging of result status
@@ -39,7 +39,8 @@ router.post("/v1/quotes", async (req, res) => {
   } catch (error) {
 
     // Error logging
-    console.log(error)
+    console.log(error);
+
     return error;
   }
 
