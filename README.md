@@ -8,10 +8,10 @@
 https://rocket-insurance.herokuapp.com
 
 **Rating Information**
-![ScreenShot](https://user-images.githubusercontent.com/24628091/64416849-cacc7680-d04c-11e9-80a8-3d13de9df296.png)
+![ScreenShot](https://user-images.githubusercontent.com/24628091/65121046-70fc7280-d9a3-11e9-9063-5b01f08cc6e6.png)
 
 **Quote Overview**
-![ScreenShot](https://user-images.githubusercontent.com/24628091/64416890-dddf4680-d04c-11e9-966a-d5ae8931a88c.png)
+![ScreenShot](https://user-images.githubusercontent.com/24628091/65121054-748ff980-d9a3-11e9-8459-8e854c70953f.png)
 
 ## Clone
 Clone this repo to your local machine: 
