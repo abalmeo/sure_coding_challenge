@@ -75,10 +75,25 @@ html {
   height: 100%;
 }
 
+.selected-plans {
+  padding-top: 10px;
+  letter-spacing: 1px;
+  margin-top: 10px;
+}
+.deductible {
+  margin-bottom: 10px;
+}
+
 .insurance-registration {
+  padding-top: 5%;
   max-width: 330px;
   max-height: 25%;
   margin: auto;
+}
+
+.insurance-section {
+  padding-top: 50px;
+  padding-bottom: 10%;
 }
 
 .insurance-selection {

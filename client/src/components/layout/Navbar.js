@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from "react-router-dom";
 import { Navbar, Nav } from 'react-bootstrap';
 
 const Navigation = () => {
@@ -10,7 +9,7 @@ const Navigation = () => {
       <span>Rocket Insurance</span>
       </Navbar.Brand>
     <Nav className="ml-auto">
-      <Nav.Link href="/">Rating Information</Nav.Link>
+      <Nav.Link href="/">Registration</Nav.Link>
       <Nav.Link href="/quote-overview">Quote Overview</Nav.Link>
     </Nav>
   </Navbar>

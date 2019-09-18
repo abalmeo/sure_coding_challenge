@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import { Card, Row, Col } from 'react-bootstrap';
 import { Redirect } from "react-router-dom";
 
@@ -28,12 +28,13 @@ const QuoteOverview = () => {
   const onFormSubmit = e => {
     e.preventDefault();
 
-    // update time and add insurancePlan to local storage
+    // update time and add insurancePlans to local storage
     localStorage.setItem('setupTime', now);
-    if (insuranceData.collision) {
+
+    if (collision) {
       localStorage.setItem('collisionPlan', collision);
     }
-    if (insuranceData.deductible) {
+    if (deductible) {
       localStorage.setItem('deductiblePlan', deductible)
     }
 
@@ -43,13 +44,13 @@ const QuoteOverview = () => {
     });
   };
 
-  // Clear localStorage if current time is 1 hour passed setupTime and redirect to form
+  // Clear localStorage if current time is 1 hour passed setupTime and redirect to Rating Information form
   if (now-setupTime > 1*60*60*1000) {
     localStorage.clear();
     return <Redirect to="/" />;
   }
 
-  // Clear localStorage and Redirect to form if invalid data
+  // Clear localStorage and Redirect to Rating Information form if invalid data
   if (data === null || data.error === true) {
     localStorage.clear();
     return <Redirect to="/" />;
@@ -72,7 +73,7 @@ const QuoteOverview = () => {
       variable_options,
     }} = data;
 
-    // Mapping through returned values
+    // Mapping through local storage insurance plans to set up dropdown menu
     const deductible_values = variable_options.deductible.values.map((val, ind) => (
       <option value={val} key={val}> Option {ind+1}: ${val}</option>
       )
@@ -80,8 +81,8 @@ const QuoteOverview = () => {
 
     const collision_values = variable_options.asteroid_collision.values.map((val, ind) => (
       <option value={val}> Option {ind+1}: ${val}</option>
-    )
-  );
+      )
+    );
 
   return (
     <div className="quoteBackground">
@@ -93,25 +94,35 @@ const QuoteOverview = () => {
         </Col>
 
         <Col md={{span: 12}}>
-          <Card className="insuranceCard" bg="info" text="white" style={{ width: '30rem', height: '40rem' }}>
+          <Card className="insuranceCard" bg="info" text="white" style={{ width: '30rem', height: '42rem' }}>
             <Card.Header className="cardOverview">Profile</Card.Header>
 
-            <Card.Body style={{height: '1rem' }}>
+            <Card.Body style={{height: '3rem' }}>
               <div>
                 <Card.Subtitle>Policy Holder: {first_name} {last_name}</Card.Subtitle><br/>
                 <Card.Subtitle>Address: {line_1} {line_2} {city}, {region} {postal}</Card.Subtitle>
               </div>
-              <div>
-                <Card.Subtitle>Collision Plan: {collisionPlan} </Card.Subtitle>
-                <Card.Subtitle>Deductible Plan: {deductiblePlan} </Card.Subtitle>
+              <div className="selected-plans">
+                {deductiblePlan > 0 &&
+                  <Card.Subtitle className="deductible">
+                    Deductible Plan: ${deductiblePlan}
+                  </Card.Subtitle>
+                }
+                {collisionPlan > 0 &&
+                  <Card.Subtitle>
+                    Collision Plan: ${collisionPlan}
+                  </Card.Subtitle>
+                }
               </div>
             </Card.Body>
 
             <Card.Body>
               <form className="insurance-registration" onSubmit={e => onFormSubmit(e)} name="deductible">
+
+              <div className="insurance-section">
                 <Card.Subtitle className="cardOverview">{variable_options.deductible.title}*</Card.Subtitle>
                   <Card.Text>{variable_options.deductible.description}</Card.Text>
-                  <div>
+                    <div>
                     <select
                       name="deductible"
                       className="insurance-selection"
@@ -122,6 +133,9 @@ const QuoteOverview = () => {
                       {deductible_values}
                     </select>
                   </div>
+                </div>
+
+                <div>
                   <Card.Subtitle className="cardOverview">{variable_options.asteroid_collision.title}*</Card.Subtitle>
                   <Card.Text>{variable_options.asteroid_collision.description}</Card.Text>
                   <div>
@@ -135,7 +149,10 @@ const QuoteOverview = () => {
                     {collision_values}
                   </select>
                   </div>
+                </div>
+
                 <input className="submitButton" type='submit'/>
+
               </form>
             </Card.Body>
           </Card>
