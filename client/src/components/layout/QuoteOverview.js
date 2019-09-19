@@ -28,7 +28,7 @@ const QuoteOverview = () => {
   const onFormSubmit = e => {
     e.preventDefault();
 
-    // update time and add insurancePlans to local storage
+    // Update time and add insurancePlans to local storage
     localStorage.setItem('setupTime', now);
 
     if (collision) {

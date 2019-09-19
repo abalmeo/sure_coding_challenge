@@ -4,7 +4,6 @@ import states from '../utils/states';
 
 const RatingInformation = () => {
 
-
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -13,7 +12,6 @@ const RatingInformation = () => {
     city: "",
     region: "",
     postal: "",
-    page_reload: "",
   });
 
   const {
