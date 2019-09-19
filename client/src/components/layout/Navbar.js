@@ -1,18 +1,28 @@
 import React from 'react'
-import { Navbar, Nav } from 'react-bootstrap';
+import { Link } from "react-router-dom";
 
 const Navigation = () => {
   return (
-    <Navbar sticky="top" bg="light" variant="light">
-    <Navbar.Brand href="/">
-      <i className="fas fa-rocket"/>{" "}
-      <span>Rocket Insurance</span>
-      </Navbar.Brand>
-    <Nav className="ml-auto">
-      <Nav.Link href="/">Registration</Nav.Link>
-      <Nav.Link href="/quote-overview">Quote Overview</Nav.Link>
-    </Nav>
-  </Navbar>
+    <nav className="navbar bg-light">
+      <h1>
+        <Link to="/">
+          <i className="nav-text fas fa-rocket"/>{" "}
+          <span className="nav-text">Rocket Insurance</span>
+        </Link>
+      </h1>
+    <ul>
+      <li>
+        <Link to="/">
+            <span className="nav-text">Registration</span>
+        </Link>
+      </li>
+      <li>
+        <Link to="/quote-overview">
+            <span className="nav-text">Quote Overview</span>
+        </Link>
+      </li>
+    </ul>
+  </nav>
   )
 }
 
